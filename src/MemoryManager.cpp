@@ -15,3 +15,8 @@ AllocatorStrategy *MemoryManager::getAllocatorStrategy() const {
 void MemoryManager::setAllocatorStrategy(AllocatorStrategy *allocatorStrategy) {
     MemoryManager::allocatorStrategy = allocatorStrategy;
 }
+
+void MemoryManager::extendHeap(std::size_t size) {
+    assert(this->allocatorStrategy != nullptr);
+    this->allocatorStrategy->extendHeap(size);
+}

@@ -11,16 +11,10 @@ enum class AllocatorStrategyType {
 };
 
 class AllocatorStrategyFactory {
+    AllocatorStrategyFactory() = delete;
+
 public:
-    static AllocatorStrategy *create(AllocatorStrategyType allocatorStrategyType) {
-        switch (allocatorStrategyType) {
-            case AllocatorStrategyType::FIRST_FIT: {
-                return new(malloc(sizeof(FirstFitAllocatorStrategy))) FirstFitAllocatorStrategy();
-            }
-            default:
-                return nullptr;
-        }
-    }
+    static AllocatorStrategy *create(AllocatorStrategyType allocatorStrategyType);
 };
 
 

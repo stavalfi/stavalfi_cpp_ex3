@@ -4,6 +4,7 @@
 
 #include "AllocatorStrategy.h"
 #include "HashMapAllocator.h"
+#include "MemoryPool.h"
 
 class FirstFitAllocatorStrategy : public AllocatorStrategy {
     HashMapAllocator hashMapAllocator;
@@ -11,6 +12,8 @@ public:
     void *allocate(std::size_t blockSize) throw(std::bad_alloc) override;
 
     void deallocate(void *block) throw() override;
+
+    void extendHeap(std::size_t size) override;
 
     ~FirstFitAllocatorStrategy() override;
 };

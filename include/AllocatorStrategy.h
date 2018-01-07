@@ -11,6 +11,8 @@ public:
 
     virtual void deallocate(void *block) = 0;
 
+    virtual void extendHeap(std::size_t size) = 0;
+
     virtual ~AllocatorStrategy() = 0;
 };
 
