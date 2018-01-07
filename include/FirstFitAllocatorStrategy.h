@@ -8,6 +8,18 @@
 
 class FirstFitAllocatorStrategy : public AllocatorStrategy {
     HashMapAllocator hashMapAllocator;
+
+    /**
+     * calculate how much extra space we
+     * need to allocate on the real heap
+     * for our heap.
+     * @param blockSize we need to allocate
+     * and we don't have any space for in
+     * our heap at the moment.
+     * @return 2^x, where x is the smallest number such that blockSize<=2^x.
+     */
+    std::size_t calculateExtraHeapSizeNeeded(std::size_t blockSize) const;
+
 public:
     void *allocate(std::size_t blockSize) throw(std::bad_alloc) override;
 

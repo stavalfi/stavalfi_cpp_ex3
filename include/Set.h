@@ -24,6 +24,18 @@ public:
 
     T removeFirst();
 
+    template<typename MapToNumber>
+    std::size_t sum(MapToNumber mapToNumber) const {
+        std::size_t sum = 0;
+        Node<T> *pos = this->head;
+        while (pos != nullptr) {
+            const T &data = pos->getData();
+            sum += mapToNumber(data);
+            pos = pos->getNext();
+        }
+        return sum;
+    }
+
     ~Set();
 
 private:
@@ -91,7 +103,7 @@ T &Set<T>::insertSorted(const T &data) {
     while (pos != nullptr) {
         if (pos->getData() <= data) {
             if (pos->getNext() != nullptr) {
-                if (data <= pos->getData()) {
+                if (data <= pos->getNext()->getData()) {
                     // between 2 nodes
                     Node<T> *newNode = static_cast<Node<T> *>(malloc(sizeof(Node<T>)));
                     assert(this->head != nullptr);
@@ -107,9 +119,18 @@ T &Set<T>::insertSorted(const T &data) {
         }
         pos = pos->getNext();
     }
+    // if pos == nullptr then the first if
+    // inside the while loop was failed
+    // at the last iteration and it means
+    // that data is the smallest number
+    // from all the values in set.
+    // then the first if inside this
+    // method would be applied.
+    // contradiction ;D
+    assert(pos != nullptr);
     // put after the last node
     Node<T> *newNode = static_cast<Node<T> *>(malloc(sizeof(Node<T>)));
-    assert(this->head != nullptr);
+    assert(newNode != nullptr);
     newNode = new(newNode) Node<T>(data);
     pos->setNext(newNode);
     return newNode->getData();
@@ -117,7 +138,7 @@ T &Set<T>::insertSorted(const T &data) {
 
 template<typename T>
 T Set<T>::removeFirst() {
-    assert(isEmpty());
+    assert(!isEmpty());
     Node<T> *temp = this->head;
     this->head = this->head->getNext();
     // call destructor of data

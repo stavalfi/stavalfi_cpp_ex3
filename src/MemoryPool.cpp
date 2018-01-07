@@ -12,3 +12,9 @@ char *MemoryPool::addPool(const size_t blockSize) throw(std::bad_alloc) {
     assert(extraPool != nullptr);
     return this->pools.insertSorted(Pool(extraPool, blockSize)).getBlock();
 }
+
+std::size_t MemoryPool::currentHeapSize() const {
+    return this->pools.sum([](const Pool &pool) {
+        return pool.getBlockSize();
+    });
+}

@@ -49,7 +49,7 @@ void HashMapAllocator::insert(char *freeBlock, std::size_t freeBlockSize) {
     for (std::size_t i = this->arrayLength - 1; sizeLeftToAllocate > 0 && i >= 0; i--) {
         std::size_t cellSize = pow(2, i);
         if (cellSize <= sizeLeftToAllocate) {
-            this->array[i].insertSorted(std::move(freeBlock));
+            this->array[i].insertSorted(freeBlock);
             sizeLeftToAllocate -= cellSize;
             freeBlock += cellSize;
         }

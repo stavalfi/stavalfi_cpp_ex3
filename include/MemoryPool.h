@@ -15,6 +15,8 @@ public:
 
     static MemoryPool &getInstance();
 
+    std::size_t currentHeapSize() const;
+
     /**
      * try to extend the current memory pool.
      * @param blockSize
