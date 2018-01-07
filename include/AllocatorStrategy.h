@@ -6,16 +6,6 @@
 #include <new>
 
 class AllocatorStrategy {
-protected:
-    /**
-     * try to extend the current memory pool.
-     * @param blockSize
-     * @return if succeed, return the initial address
-     * of the new extended place in our heap,
-     * else return nullptr.
-     */
-    virtual char *extendMemoryPool(std::size_t blockSize)=0;
-
 public:
     virtual void *allocate(std::size_t blockSize) throw(std::bad_alloc) = 0;
 

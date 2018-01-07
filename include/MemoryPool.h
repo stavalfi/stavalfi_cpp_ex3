@@ -15,6 +15,13 @@ public:
 
     static MemoryPool &getInstance();
 
+    /**
+     * try to extend the current memory pool.
+     * @param blockSize
+     * @return if succeed, return the initial address
+     * of the new extended place in our heap,
+     * else return nullptr.
+     */
     char *addPool(const size_t blockSize) throw(std::bad_alloc);
 };
 
