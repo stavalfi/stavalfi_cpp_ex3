@@ -4,6 +4,7 @@
 
 void *FirstFitAllocatorStrategy::allocate(std::size_t blockSize) throw(std::bad_alloc) {
     std::size_t blockSizeWithHeader = blockSize + sizeof(std::size_t);
+    this->currentAllocationSize += blockSizeWithHeader;
     char *block = this->hashMapAllocator.get(blockSizeWithHeader);
     if (block == nullptr) {
         // we need more space in our heap!
@@ -24,12 +25,14 @@ void FirstFitAllocatorStrategy::deallocate(void *block) throw() {
     assert(readBlockSize != nullptr);
     readBlockSize--;
     std::size_t blockSizeWithHeader = *readBlockSize + sizeof(std::size_t);
+    this->currentAllocationSize -= blockSizeWithHeader;
     this->hashMapAllocator.insert(reinterpret_cast<char *>(readBlockSize), blockSizeWithHeader);
     std::cout << "deallocated: " << blockSizeWithHeader << " bytes" << std::endl;
 }
 
 FirstFitAllocatorStrategy::~FirstFitAllocatorStrategy() {
-
+    if (this->currentAllocationSize != 0)
+        std::cout << "This FirstFit Algorithm have a leak of: " << this->currentAllocationSize + " bytes!" << std::endl;
 }
 
 void FirstFitAllocatorStrategy::extendHeap(std::size_t size) {

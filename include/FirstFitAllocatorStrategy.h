@@ -7,6 +7,7 @@
 #include "MemoryPool.h"
 
 class FirstFitAllocatorStrategy : public AllocatorStrategy {
+    std::size_t currentAllocationSize=0;
     HashMapAllocator hashMapAllocator;
 
     /**

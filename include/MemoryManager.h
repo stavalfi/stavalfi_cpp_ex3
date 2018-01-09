@@ -5,16 +5,17 @@
 #include "MemoryPool.h"
 
 class MemoryManager {
-    AllocatorStrategy *allocatorStrategy;
+    bool isValgrindEnabled = false;
+    AllocatorStrategy *allocatorStrategy = nullptr;
 
     MemoryManager() = default;
 
 public:
     static MemoryManager &getInstance();
 
-    void extendHeap(std::size_t size);
-
     AllocatorStrategy *getAllocatorStrategy() const;
+
+    void extendHeap(std::size_t size);
 
     void setAllocatorStrategy(AllocatorStrategy *allocatorStrategy);
 };
