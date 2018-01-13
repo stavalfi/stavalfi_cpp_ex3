@@ -18,3 +18,9 @@ std::size_t MemoryPool::currentHeapSize() const {
         return pool.getBlockSize();
     });
 }
+
+MemoryPool::~MemoryPool() {
+    this->pools.foreach([](Pool &pool) {
+        free(pool.getBlock());
+    });
+}

@@ -25,6 +25,8 @@ public:
      * else return nullptr.
      */
     char *addPool(const size_t blockSize) throw(std::bad_alloc);
+
+    ~MemoryPool();
 };
 
 #endif //STAVALFI_CPP_EX3_MEMORY_POOL_H

@@ -25,16 +25,10 @@ public:
     T removeFirst();
 
     template<typename MapToNumber>
-    std::size_t sum(MapToNumber mapToNumber) const {
-        std::size_t sum = 0;
-        Node<T> *pos = this->head;
-        while (pos != nullptr) {
-            const T &data = pos->getData();
-            sum += mapToNumber(data);
-            pos = pos->getNext();
-        }
-        return sum;
-    }
+    std::size_t sum(MapToNumber mapToNumber) const;
+
+    template<typename Consumer>
+    void foreach(Consumer consumer) const;
 
     ~Set();
 
@@ -150,6 +144,29 @@ T Set<T>::removeFirst() {
 template<typename T>
 bool Set<T>::isEmpty() const {
     return this->head == nullptr;
+}
+
+template<typename T>
+template<typename MapToNumber>
+std::size_t Set<T>::sum(MapToNumber mapToNumber) const {
+    std::size_t sum = 0;
+    Node<T> *pos = this->head;
+    while (pos != nullptr) {
+        const T &data = pos->getData();
+        sum += mapToNumber(data);
+        pos = pos->getNext();
+    }
+    return sum;
+}
+
+template<typename T>
+template<typename Consumer>
+void Set<T>::foreach(Consumer consumer) const {
+    Node<T> *pos = this->head;
+    while (pos != nullptr) {
+        consumer(pos->getData());
+        pos = pos->getNext();
+    }
 }
 
 
